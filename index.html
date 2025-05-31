@@ -302,7 +302,7 @@ document.addEventListener('DOMContentLoaded', function() {
       // 현재가격 (업비트 API)
       if (symbolStr && upbitMarkets.includes(symbolStr)) {
         try {
-          const res = await fetch(`https://corsproxy.io/?https://api.upbit.com/v1/ticker?markets=KRW-${symbolStr}`);
+          const res = await fetch(`https://cryptocal.muts111zzz.workers.dev/?url=https://api.upbit.com/v1/ticker?markets=KRW-${symbolStr}`);
           const data = await res.json();
           let fetchedPrice = data[0].trade_price;
           lrow.querySelector('.cur-price').value = Number(fetchedPrice).toLocaleString();
@@ -355,8 +355,7 @@ if (roiInput && roiInput.value !== '') {
 
           const toIso = now.toISOString();
           const res2 = await fetch(
-  `https://corsproxy.io/?https://api.upbit.com/v1/candles/days?market=KRW-${symbolStr}&to=${toIso}&count=${count}`
-);
+		  `https://cryptocal.muts111zzz.workers.dev/?url=https://api.upbit.com/v1/candles/days?market=KRW-${symbolStr}&to=${toIso}&count=${count}`);
 
           const candles = await res2.json();
 
