@@ -408,18 +408,19 @@ if (maxRoiInput && maxRoiInput.value !== '' && maxRoiInput.value !== '-') {
 
       // 최고 수익률(%) > 익절 구간 절대값(%) 이어야만 작동
       if (
-        maxRoiNum !== null &&
-        !isNaN(maxRoiNum) &&
-        curPrice !== null &&
-        !isNaN(curPrice) &&
-        maxRoiNum > (absProfitVal * 100)
-      ) {
-        // 현재가격 × (1 + (최고 수익률(%) / 100 + 익절 구간))
-        let profitRate = (maxRoiNum / 100) + takeProfitVal;
-        profitPoint = Math.round(curPrice * (1 + profitRate)).toLocaleString();
-      } else {
-        profitPoint = '';
-      }
+  maxRoiNum !== null &&
+  !isNaN(maxRoiNum) &&
+  avgPriceNumber !== null &&
+  !isNaN(avgPriceNumber) &&
+  maxRoiNum > (absProfitVal * 100)
+) {
+  // 평균단가 × (1 + (최고 수익률(%) / 100 + 익절 구간))
+  let profitRate = (maxRoiNum / 100) + takeProfitVal;
+  profitPoint = Math.round(avgPriceNumber * (1 + profitRate)).toLocaleString();
+} else {
+  profitPoint = '';
+}
+
 
       // 실제 input에 입력
       rrow.querySelector('.profit-point').value = profitPoint;
@@ -428,8 +429,8 @@ if (maxRoiInput && maxRoiInput.value !== '' && maxRoiInput.value !== '-') {
 	  // === 손절점(손절) 계산 ===
 // 익절점이 없을 때만 작동
 let stopPoint = '';
-if (!profitPoint && curPrice !== null && !isNaN(curPrice)) {
-  stopPoint = Math.round(curPrice * (1 + stopLossVal)).toLocaleString();
+if (!profitPoint && avgPriceNumber !== null && !isNaN(avgPriceNumber)) {
+  stopPoint = Math.round(avgPriceNumber * (1 + stopLossVal)).toLocaleString();
 } else {
   stopPoint = '';
 }
