@@ -304,6 +304,7 @@ document.addEventListener('DOMContentLoaded', function() {
         try {
           const res = await fetch(`https://cryptocal.muts111zzz.workers.dev/?url=https://api.upbit.com/v1/ticker?markets=KRW-${symbolStr}`);
           const data = await res.json();
+		  console.log("API data:", data);
           let fetchedPrice = data[0].trade_price;
           lrow.querySelector('.cur-price').value = Number(fetchedPrice).toLocaleString();
           curPrice = fetchedPrice;
