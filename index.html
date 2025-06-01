@@ -211,6 +211,16 @@ input {
   </div>
 
  <script>
+ function blockBuyDateKeyboard() {
+  document.querySelectorAll('.buy-date').forEach(input => {
+    input.addEventListener('keydown', function(e) {
+      e.preventDefault();
+      return false;
+    });
+  });
+}
+
+ 
  // 오늘 날짜를 yyyy-mm-dd 형식으로 구하기
 const now = new Date();
 const YYYY = now.getFullYear();
@@ -550,6 +560,7 @@ function loadTableData() {
     setTimeout(updateAllSymbolDatalists, 200);
     bindEvents();
 	setBuyDateMax();
+	blockBuyDateKeyboard();
 
   }
 
@@ -645,13 +656,15 @@ function loadTableData() {
       date.disabled = false;
       price.disabled = false;
     }
+	  setBuyDateMax();
+	  blockBuyDateKeyboard();
   }
 
   loadTableData();
   bindEvents();
   updateAll();
   setBuyDateMax();
-
+blockBuyDateKeyboard();
 });
 </script>
 
