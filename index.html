@@ -8,8 +8,8 @@
     h1 { text-align: center; font-size: 35px; font-weight: bold; }
     .timestamp { text-align: center; font-size: 17px; font-weight: bold; margin-bottom: 20px; }
     .top-container { display: flex; align-items: flex-start; gap: 10px; margin-bottom: 20px; }
-    .guide { background-color: #fffde7; padding: 10px; border: 1px solid #eee; width: 1100px; font-size: 18px; line-height: 1.8; }
-    .info-boxes { display: flex; gap: 10px; margin-top: 130px; margin-left: 70px; }
+    .guide { background-color: #fffde7; padding: 10px; border: 1px solid #eee; width: 1050px; font-size: 18px; line-height: 1.8; }
+    .info-boxes { display: flex; gap: 5px; margin-top: 230px; margin-left: 105px; }
     .info-box { background-color: #ADD8E633; border: none; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.1); padding: 10px; width: 130px; display: flex; flex-direction: column; justify-content: space-between; align-items: center; }
     .info-box:nth-child(2) { background-color: rgba(255,0,0,0.1); }
     .info-box p { margin: 0; font-size: 18px; font-weight: bold; text-align: center; }
@@ -97,13 +97,16 @@ input {
 
   <div class="top-container">
     <div class="guide">
-      <b>📝 매도 목표: <u>수익 구간 중 상승할 땐 계속 따라 올라가되, 최고점에서 일부 하락 시 자동 매도를 목표로 함</u></b><br>
+      <b>📝 매도 목표:<br> 
+	  - <u>최고점에서 팔진 못하더라도 일정 수준에서 자동으로 익절하도록 '예약 매도' 활용</u></b><br>
+- 상승세가 이어진다면 익절점을 따라 높여가고, 하락 전환시 일정 수준에서 이익을 확정지어 손실 방지<br>
+<br>
       <b>📝 설명 및 사용방법:</b><br>
       1) 우측의 손절/익절 구간 설정<br>
-        -(손실 시)<span class="stop-loss">손절</span>점 : <b>평단가 대비 -OO% 하락시</b> 매도<br>
-        -(수익 시)<span class="take-profit">익절</span>점 : 매수일자~현재일자 중 <b>최고 수익률 대비 -OO% 하락시</b> 매도<br>
+        -(손실 시)<span class="stop-loss">손절</span>점 : <b>평단가 대비 -OO% 하락시</b> 매도 &nbsp(예시: 평단가 대비 -15% 시 손절)<br>
+        -(수익 시)<span class="take-profit">익절</span>점 : 매수 이후 <b>최고 수익률 대비 -OO% 하락시</b> 매도&nbsp(예시: 매수 후 최고수익률 60%이며, 40% 까지 하락시 자동 익절)<br>
       2) 하단 좌측 표에 거래소/종목명/매수일자/평균단가 입력 → 실시간 가격과 수익률·최고가·매도점 자동 계산<br>
-      3) 산출된 매도점을 거래소에 '자동주문'으로 입력(감시가, 주문가 동일) → 해당 가격 도달시 주문이 발동됨
+      3) 산출된 매도점을 업비트 거래소에 '예약주문'으로 입력(감시가, 주문가 동일) → 해당 가격 도달시 주문이 발동됨
     </div>
     <div class="info-boxes">
       <div class="info-box">
