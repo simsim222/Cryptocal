@@ -211,6 +211,19 @@ input {
   </div>
 
  <script>
+ // 오늘 날짜를 yyyy-mm-dd 형식으로 구하기
+const now = new Date();
+const YYYY = now.getFullYear();
+const MM = String(now.getMonth() + 1).padStart(2, '0');
+const DD = String(now.getDate()).padStart(2, '0');
+const todayStr = `${YYYY}-${MM}-${DD}`;
+
+function setBuyDateMax() {
+  document.querySelectorAll('.buy-date').forEach(input => {
+    input.setAttribute('max', todayStr);
+  });
+}
+
 document.addEventListener('DOMContentLoaded', function() {
   // 업비트 종목리스트만 사용
   const marketSymbols = { UPBIT: [] };
@@ -233,8 +246,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
   // 업비트 종목 불러오기 (티커+한글명)
   async function fetchUpbitMarkets() {
-    const res = await fetch('https://cryptocal.muts111zzz.workers.dev/?url=https://api.upbit.com/v1/market/all?isDetails=false');
-
+    const res = await fetch('https://api.upbit.com/v1/market/all?isDetails=false');
     const data = await res.json();
     marketSymbols.UPBIT = data.filter(m => m.market.startsWith('KRW-'))
       .map(m => ({
@@ -301,17 +313,17 @@ document.addEventListener('DOMContentLoaded', function() {
 
       // 현재가격 (업비트 API)
       if (symbolStr && upbitMarkets.includes(symbolStr)) {
-        try {
-          const res = await fetch(`https://cryptocal.muts111zzz.workers.dev/?url=https://api.upbit.com/v1/ticker?markets=KRW-${symbolStr}`);
-          const data = await res.json();
-		  console.log("API data:", data);
-          let fetchedPrice = data[0].trade_price;
-          lrow.querySelector('.cur-price').value = Number(fetchedPrice).toLocaleString();
-          curPrice = fetchedPrice;
-        } catch (e) {
-          lrow.querySelector('.cur-price').value = '';
-        }
-      }
+  try {
+    // fetch 결과를 res 변수에 반드시 저장
+    const res = await fetch(`https://cryptocal.muts111zzz.workers.dev/?url=https://api.upbit.com/v1/ticker?markets=KRW-${symbolStr}`);
+    const data = await res.json();
+    let fetchedPrice = data[0].trade_price;
+    lrow.querySelector('.cur-price').value = Number(fetchedPrice).toLocaleString();
+    curPrice = fetchedPrice;
+  } catch (e) {
+    lrow.querySelector('.cur-price').value = '';
+  }
+}
 
       // 수익률 계산 (avgPriceNumber로)
 let roi = '';
@@ -355,21 +367,20 @@ if (roiInput && roiInput.value !== '') {
           const count = Math.min(diffDays, 200);
 
           const toIso = now.toISOString();
-          const res2 = await fetch(
-		  `https://cryptocal.muts111zzz.workers.dev/?url=https://api.upbit.com/v1/candles/days?market=KRW-${symbolStr}&to=${toIso}&count=${count}`);
+const res2 = await fetch(`https://cryptocal.muts111zzz.workers.dev/?url=https://api.upbit.com/v1/candles/days?market=KRW-${symbolStr}&to=${toIso}&count=${count}`);
 
-          const candles = await res2.json();
+const candles = await res2.json();
 
-          highPrice = candles.reduce((max, c) => Math.max(max, c.high_price), 0);
+highPrice = candles.reduce((max, c) => Math.max(max, c.high_price), 0);
 
-          if (highPrice < avgPriceNumber) {
-            rrow.querySelector('.high-price').value = '-';
-            rrow.querySelector('.max-roi').value = '-';
-          } else {
-            rrow.querySelector('.high-price').value = Number(highPrice).toLocaleString();
-            maxRoi = ((highPrice - avgPriceNumber) / avgPriceNumber * 100).toFixed(1);
-            rrow.querySelector('.max-roi').value = maxRoi;
-          }
+if (highPrice < avgPriceNumber) {
+  rrow.querySelector('.high-price').value = '-';
+  rrow.querySelector('.max-roi').value = '-';
+} else {
+  rrow.querySelector('.high-price').value = Number(highPrice).toLocaleString();
+  maxRoi = ((highPrice - avgPriceNumber) / avgPriceNumber * 100).toFixed(1);
+  rrow.querySelector('.max-roi').value = maxRoi;
+}
 		  
 		  let maxRoiInput = rrow.querySelector('.max-roi');
 if (maxRoiInput && maxRoiInput.value !== '' && maxRoiInput.value !== '-') {
@@ -421,7 +432,6 @@ if (maxRoiInput && maxRoiInput.value !== '' && maxRoiInput.value !== '-') {
 } else {
   profitPoint = '';
 }
-
 
       // 실제 input에 입력
       rrow.querySelector('.profit-point').value = profitPoint;
@@ -539,6 +549,8 @@ function loadTableData() {
     rightTbody.appendChild(rightClone);
     setTimeout(updateAllSymbolDatalists, 200);
     bindEvents();
+	setBuyDateMax();
+
   }
 
   document.querySelectorAll('.clear-row').forEach(btn => {
@@ -638,6 +650,8 @@ function loadTableData() {
   loadTableData();
   bindEvents();
   updateAll();
+  setBuyDateMax();
+
 });
 </script>
 
